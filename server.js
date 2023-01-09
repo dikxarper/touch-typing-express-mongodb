@@ -1,8 +1,8 @@
 require("dotenv").config({ path: ".env" })
 const express = require("express")
-const { default: mongoose } = require("mongoose")
 const app = express()
-
+const mongoose = require("mongoose")
+const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 5000
 
 const indexRouter = require("./routes/index")
@@ -17,7 +17,8 @@ app.set("view engine", "ejs")
 app.set("views", __dirname + "/views")
 
 //middlewares
-app.use(express.json)
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }))
+app.use(express.static("public"))
 
 //connecting to routes
 app.use("/", indexRouter)
