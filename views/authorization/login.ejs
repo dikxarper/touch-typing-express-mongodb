@@ -1,0 +1,40 @@
+<head>
+  <link rel="stylesheet" href="css/authorization.css" />
+  <title>Log in | Perne</title>
+</head>
+
+<body>
+  <form method="POST" action="/account/login">
+    <div class="text__field">
+      <input
+        type="text"
+        autocomplete="off"
+        id="username"
+        name="username"
+        required
+      />
+      <span></span>
+      <label>Username</label>
+    </div>
+    <div class="text__field">
+      <i class="fas fa-lock" onclick="show()"></i>
+      <input
+        name="password"
+        type="password"
+        id="myInput"
+        onclick="togglePassword()"
+        id="password"
+        required
+      />
+      <span class="span"> </span>
+      <label>Password</label>
+    </div>
+    <div class="pass">Forgot Password?</div>
+    <input type="submit" value="Login" />
+    <div class="signup__link">
+      Not a member? <a href="/account/register">Sign Up </a>
+    </div>
+    <!--<div id="googleId" class="g-signin2" data-onsuccess="onSignIn"></div>
+        -->
+  </form>
+</body>
