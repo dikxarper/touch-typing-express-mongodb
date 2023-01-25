@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const passportLocalMongoose = require("passport-local-mongoose")
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -24,8 +25,11 @@ const userSchema = new mongoose.Schema({
   },
   avg_wpm: {
     type: Number,
-    required: true,
   },
 })
 
-module.exports = mongoose.model("User", userSchema)
+userSchema.plugin(passportLocalMongoose)
+const userDB = mongoose.connection.useDb("projDB")
+const User = userDB.model("user", userSchema)
+
+module.exports = User
