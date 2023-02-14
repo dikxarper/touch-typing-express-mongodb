@@ -2,9 +2,9 @@ const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random"
 const quoteDisplayElement = document.getElementById("quoteDisplay")
 const quoteInputElement = document.getElementById("quoteInput")
 const timerElement = document.getElementById("timer")
-
 quoteInputElement.addEventListener("input", () => {
   const arrayQuote = quoteDisplayElement.querySelectorAll("span")
+  const arr = quoteInputElement.querySelectorAll("span")
   const arrayValue = quoteInputElement.value.split("")
 
   let correct = true

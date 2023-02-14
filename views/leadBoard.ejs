@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <div class="container">
+    <h1 class="mb-4 mt-5">Articles</h1>
+    <div class="card_index">
+      <% user.forEach(function(user){ %>
+      <div class="card mt-4">
+        <div class="card-body">
+          <h4 class="card-title"><%= user.username %></h4>
+          <div class="card-subtitle text-muted mb-2"><%= user.email %></div>
+          <div class="card-text mb-2"><%= user.country %></div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
