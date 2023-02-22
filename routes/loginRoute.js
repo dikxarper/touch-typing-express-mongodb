@@ -50,7 +50,7 @@ router.post(
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
         const alert = errors.array()
-        res.render("/authorization/register", {
+        res.render("authorization/register", {
           alert,
         })
       } else {
@@ -60,6 +60,7 @@ router.post(
           return res.status(400).json({ message: "Email already exists" })
         else {
           const hashPassword = bcrypt.hashSync(password, 7)
+          console.log(hashPassword)
           const userRole = await Role.findOne({ role: "user" })
           let newUser = new User({
             username: username,
@@ -71,7 +72,7 @@ router.post(
           })
 
           newUser = await newUser.save()
-          res.cookie("userRole", userRole.role  )
+          res.cookie("userRole", userRole.role)
 
           const emailCookie = encodeURIComponent(email)
           res.cookie("email", emailCookie)

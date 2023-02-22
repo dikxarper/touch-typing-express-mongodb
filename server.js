@@ -38,12 +38,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }))
 app.use(session({ secret: "cat", resave: true, saveUninitialized: true }))
 
-app.use(passport.initialize())
-app.use(passport.session())
-passport.use(new LocalStrategy(User.authenticate()))
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
-
 //connecting to routes
 app.use("/", indexRouter)
 app.use(loginRouter)
