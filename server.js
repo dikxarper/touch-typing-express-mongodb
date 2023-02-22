@@ -14,6 +14,7 @@ const User = require("./models/user")
 const indexRouter = require("./routes/indexRoute")
 const loginRouter = require("./routes/loginRoute")
 const leadBoardRouter = require("./routes/leadBoardRoute")
+const adminPanelRouter = require("./routes/adminPanelRouter")
 
 //connecting to MongoDB Database
 mongoose.set("strictQuery", false)
@@ -44,8 +45,9 @@ passport.deserializeUser(User.deserializeUser())
 
 //connecting to routes
 app.use("/", indexRouter)
-app.use("/account", loginRouter)
+app.use(loginRouter)
 app.use("/leadBoard", leadBoardRouter)
+app.use("/admin", adminPanelRouter)
 
 //app.listen
 app.listen(PORT, () => {

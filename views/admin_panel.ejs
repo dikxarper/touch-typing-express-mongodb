@@ -1,0 +1,31 @@
+<head>
+  <link rel="stylesheet" href="css/admin_panel.css" />
+  <title>Admin</title>
+</head>
+
+<body>
+  <div class="">
+    <table>
+      <thead>
+        <tr>
+          <th>_id</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>City</th>
+          <th>Organization</th>
+        </tr>
+      </thead>
+      <% user.forEach(function(user) { %>
+      <tbody>
+        <tr>
+          <td><%=user._id %></td>
+          <td><%=user.username %></td>
+          <td><%=user.email %></td>
+          <td><%=user.country %></td>
+          <td><%=user.organization %></td>
+        </tr>
+      </tbody>
+      <% }) %>
+    </table>
+  </div>
+</body>

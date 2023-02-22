@@ -1,49 +1,99 @@
-const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random"
-const quoteDisplayElement = document.getElementById("quoteDisplay")
-const quoteInputElement = document.getElementById("quoteInput")
-const timerElement = document.getElementById("timer")
-quoteInputElement.addEventListener("input", () => {
-  const arrayQuote = quoteDisplayElement.querySelectorAll("span")
-  const arr = quoteInputElement.querySelectorAll("span")
-  const arrayValue = quoteInputElement.value.split("")
+const typingText = document.querySelector(".typing-text p"),
+  inpField = document.querySelector(".wrapper .input-field"),
+  tryAgainBtn = document.querySelector(".content button"),
+  timeTag = document.querySelector(".time span b"),
+  mistakeTag = document.querySelector(".mistake span"),
+  wpmTag = document.querySelector(".wpm span"),
+  cpmTag = document.querySelector(".cpm span")
 
-  let correct = true
-  arrayQuote.forEach((characterSpan, index) => {
-    const character = arrayValue[index]
-    if (character == null) {
-      characterSpan.classList.remove("correct")
-      characterSpan.classList.remove("incorrect")
-      correct = false
-    } else if (character === characterSpan.innerText) {
-      characterSpan.classList.add("correct")
-      characterSpan.classList.remove("incorrect")
-    } else {
-      characterSpan.classList.remove("correct")
-      characterSpan.classList.add("incorrect")
-      correct = false
+let timer,
+  maxTime = 60,
+  timeLeft = maxTime,
+  charIndex = (mistakes = isTyping = 0)
+
+function loadParagraph() {
+  const ranIndex = Math.floor(Math.random() * paragraphs.length)
+  typingText.innerHTML = ""
+  paragraphs[ranIndex].split("").forEach((char) => {
+    let span = `<span>${char}</span>`
+    typingText.innerHTML += span
+  })
+  typingText.querySelectorAll("span")[0].classList.add("active")
+  document.addEventListener("keydown", () => inpField.focus())
+  typingText.addEventListener("click", () => inpField.focus())
+}
+
+function initTyping() {
+  let characters = typingText.querySelectorAll("span")
+  let typedChar = inpField.value.split("")[charIndex]
+  if (charIndex < characters.length - 1 && timeLeft > 0) {
+    if (!isTyping) {
+      timer = setInterval(initTimer, 1000)
+      isTyping = true
     }
-  })
+    if (typedChar == null) {
+      if (charIndex > 0) {
+        charIndex--
+        if (characters[charIndex].classList.contains("incorrect")) {
+          mistakes--
+        }
+        characters[charIndex].classList.remove("correct", "incorrect")
+      }
+    } else {
+      if (characters[charIndex].innerText == typedChar) {
+        console.log(typedChar)
+        characters[charIndex].classList.add("correct")
+      } else {
+        mistakes++
+        characters[charIndex].classList.add("incorrect")
+      }
+      charIndex++
+    }
+    characters.forEach((span) => span.classList.remove("active"))
+    characters[charIndex].classList.add("active")
 
-  if (correct) renderNewQuote()
-})
+    let wpm = Math.round(
+      ((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * 60
+    )
+    wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm
 
-async function getRandomQuote() {
-  const response = await fetch(RANDOM_QUOTE_API_URL)
-  const data = await response.json()
-  return data.content
+    wpmTag.innerText = wpm
+    mistakeTag.innerText = mistakes
+    cpmTag.innerText = charIndex - mistakes
+  } else {
+    clearInterval(timer)
+    inpField.value = ""
+  }
 }
 
-async function renderNewQuote() {
-  const quote = await getRandomQuote()
-  quoteDisplayElement.innerHTML = ""
-  quote.split("").forEach((character) => {
-    const characterSpan = document.createElement("span")
-    characterSpan.innerText = character
-    quoteDisplayElement.appendChild(characterSpan)
-  })
-  quoteInputElement.value = null
-  startTimer()
+function initTimer() {
+  if (timeLeft > 0) {
+    timeLeft--
+    timeTag.innerText = timeLeft
+    let wpm = Math.round(
+      ((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * 60
+    )
+    wpmTag.innerText = wpm
+  } else {
+    clearInterval(timer)
+  }
 }
+
+function resetGame() {
+  loadParagraph()
+  clearInterval(timer)
+  timeLeft = maxTime
+  charIndex = mistakes = isTyping = 0
+  inpField.value = ""
+  timeTag.innerText = timeLeft
+  wpmTag.innerText = 0
+  mistakeTag.innerText = 0
+  cpmTag.innerText = 0
+}
+
+loadParagraph()
+inpField.addEventListener("input", initTyping)
+tryAgainBtn.addEventListener("click", resetGame)
 
 let startTime
 function startTimer() {
@@ -58,5 +108,3 @@ function startTimer() {
 function getTimerTime() {
   return Math.floor((new Date() - startTime) / 1000)
 }
-
-renderNewQuote()
