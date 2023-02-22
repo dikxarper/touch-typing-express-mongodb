@@ -4,7 +4,6 @@ const router = express.Router()
 const { validationResult, check } = require("express-validator")
 
 const User = require("../models/user")
-const Role = require("../models/role")
 
 router.get("/login", (req, res) => {
   res.render("authorization/login")
@@ -23,7 +22,8 @@ router.post("/login", async (req, res) => {
       res.redirect("/admin")
     } else {
       res.cookie("userRole", user.role)
-      res.cookie("email", email)
+      res.cookie("username", username)
+      res.cookie("id", user._id)
       req.app.locals.user = user
 
       res.redirect(`profile/${user._id}`)
@@ -61,18 +61,15 @@ router.post(
         else {
           const hashPassword = bcrypt.hashSync(password, 7)
           console.log(hashPassword)
-          const userRole = await Role.findOne({ role: "user" })
           let newUser = new User({
             username: username,
             email: email,
             password: hashPassword,
             country: country,
             organization: organization,
-            role: userRole.role,
           })
 
           newUser = await newUser.save()
-          res.cookie("userRole", userRole.role)
 
           const emailCookie = encodeURIComponent(email)
           res.cookie("email", emailCookie)

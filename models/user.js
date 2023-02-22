@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    ref: "Role",
+    default: "user",
   },
   country: {
     type: String,

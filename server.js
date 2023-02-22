@@ -17,6 +17,8 @@ const leadBoardRouter = require("./routes/leadBoardRoute")
 const adminPanelRouter = require("./routes/adminPanelRouter")
 const profileRouter = require("./routes/profileRouter")
 const requestRouter = require("./routes/requestRoute")
+const friendRouter = require("./routes/friendRoute")
+const cookieParser = require("cookie-parser")
 
 //connecting to MongoDB Database
 mongoose.set("strictQuery", false)
@@ -33,7 +35,7 @@ app.set("layout", "layouts/layout")
 //middlewares
 app.use(expressLayouts)
 app.use(express.static("public"))
-
+app.use(cookieParser())
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }))
@@ -46,6 +48,7 @@ app.use("/leadBoard", leadBoardRouter)
 app.use("/admin", adminPanelRouter)
 app.use("/profile", profileRouter)
 app.use("/requests", requestRouter)
+app.use("/friends", friendRouter)
 
 //app.listen
 app.listen(PORT, () => {
