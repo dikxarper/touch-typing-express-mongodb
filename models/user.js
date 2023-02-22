@@ -29,9 +29,17 @@ const userSchema = new mongoose.Schema({
   avg_wpm: {
     type: Number,
   },
+  friends: {
+    type: [mongoose.Types.ObjectId],
+    default: []
+  },
+  requests: {
+    type: [mongoose.Types.ObjectId],
+    default: []
+  }
 })
 
-const userDB = mongoose.connection.useDb("userDB")
+const userDB = mongoose.connection.useDb("projDB")
 const User = userDB.model("user", userSchema)
 
 module.exports = User
