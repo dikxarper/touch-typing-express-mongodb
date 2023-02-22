@@ -15,6 +15,7 @@ const indexRouter = require("./routes/indexRoute")
 const loginRouter = require("./routes/loginRoute")
 const leadBoardRouter = require("./routes/leadBoardRoute")
 const adminPanelRouter = require("./routes/adminPanelRouter")
+const profileRouter = require("./routes/profileRouter")
 
 //connecting to MongoDB Database
 mongoose.set("strictQuery", false)
@@ -48,6 +49,7 @@ app.use("/", indexRouter)
 app.use(loginRouter)
 app.use("/leadBoard", leadBoardRouter)
 app.use("/admin", adminPanelRouter)
+app.use("/profile", profileRouter)
 
 //app.listen
 app.listen(PORT, () => {

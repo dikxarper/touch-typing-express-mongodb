@@ -10,10 +10,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isAdmin: {
-    type: Boolean,
-    required: true,
-    default: false,
+  role: {
+    type: String,
+    ref: "Role",
   },
   country: {
     type: String,
