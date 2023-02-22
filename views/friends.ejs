@@ -1,5 +1,28 @@
-<ul>
+<body>
+    <style>
+        .data-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            display: flex;
+        }
+
+        @media screen and (max-width: 600px) {
+            .data-container {
+                padding: 10px;
+                display: block;
+            }
+        }
+    </style>
     <%for (let i = 0; i < friend_users.length; i++){%>
-        <li><%=friend_users[i].username%></li>
+        <div class="data-container">
+            <div style="min-width: 200px">
+                <h5><%=friend_users[i].username%></h5>
+                <h6><%=friend_users[i].email%></h6>
+            </div>
+            <button style="margin-left: 55%">View Profile</button>
+        </div>
     <%}%>
-</ul>
+</body>

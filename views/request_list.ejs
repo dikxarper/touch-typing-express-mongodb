@@ -1,5 +1,15 @@
 <ul>
     <%for (let i = 0; i < req_users.length; i++){%>
-        <li><%=req_users[i].username%></li>
+        <li>
+            <%=req_users[i].username%>
+            <form action="/requests/accept" method="post">
+                <input type="hidden" name="friendID" id="friendID" value="<%=req_users[i]._id%>">
+                <button type="submit">Accept</button>
+            </form>
+            <form action="/requests/reject" method="post">
+                <input type="hidden" name="friendID" id="friendID" value="<%=req_users[i]._id%>">
+                <button type="submit">Reject</button>
+            </form>
+        </li>
     <%}%>
 </ul>

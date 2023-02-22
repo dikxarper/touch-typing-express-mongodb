@@ -45,4 +45,51 @@ router.get('/', (req, res) => {
     }
 })
 
+router.post('/accept', async (req, res) => {
+    var accepted_friend_id = req.body.friendID
+    try {
+        const user = await User.findById({ _id: req.cookies.id })
+        if (!user) {
+            return res.status(404).send('Unauthorized user')
+        }
+        user.friends.push(accepted_friend_id)
+        await user.save()
+
+        const index = user.requests.indexOf(accepted_friend_id)
+        if (index !== -1) {
+            user.requests.splice(index, 1)
+        }
+        await user.save()
+
+        res.redirect('/requests')
+    }
+    catch(err) {
+        console.log(err)
+        res.status(500).send('Server Error')
+    }
+})
+
+router.post('/reject', async (req, res) => {
+    var rejected_friend_id = req.body.friendID
+    try {
+        const user = await User.findById({ _id: req.cookies.id })
+        if (!user) {
+            return res.status(404).send('Unauthorized user')
+        }
+
+        const index = user.requests.indexOf(rejected_friend_id)
+        if (index !== -1) {
+            user.requests.splice(index, 1)
+        }
+        await user.save()
+
+        res.redirect('/requests')
+    }
+    catch(err) {
+        console.log(err)
+        res.status(500).send('Server Error')
+    }
+})
+
+
 module.exports = router
