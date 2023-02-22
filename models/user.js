@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    ref: "Role",
+    default: "user",
   },
   country: {
     type: String,
@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
   },
 })
 
-const userDB = mongoose.connection.useDb("userDB")
-const User = userDB.model("user", userSchema)
+const db = mongoose.connection.useDb("projDB")
+const User = db.model("user", userSchema)
 
 module.exports = User
