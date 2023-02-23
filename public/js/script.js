@@ -26,6 +26,7 @@ function loadParagraph() {
   document.addEventListener("keydown", () => inpField.focus())
   typingText.addEventListener("click", () => inpField.focus())
 }
+
 function initTyping() {
   let characters = typingText.querySelectorAll("span")
   let typedChar = inpField.value.split("")[charIndex]
@@ -61,10 +62,10 @@ function initTyping() {
     wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm
 
     wpmTag.innerText = wpm
+    let cpm = charIndex - mistakes
     mistakeTag.innerText = mistakes
-    cpmTag.innerText = charIndex - mistakes
+    cpmTag.innerText = cpm
   } else {
-    newStat.save()
     clearInterval(timer)
     inpField.value = ""
   }

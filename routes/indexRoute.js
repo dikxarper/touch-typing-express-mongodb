@@ -6,23 +6,24 @@ router.get("/", (req, res) => {
   res.render("index")
 })
 
-router.post("/", (req, res) => {
-  const timeTag = document.querySelector(".time span b"),
-    wordTag = document.querySelector(".word span"),
-    mistakeTag = document.querySelector(".mistake span"),
-    wpmTag = document.querySelector(".wpm span"),
-    cpmTag = document.querySelector(".cpm span")
-
-  let cpm = cpmTag.innerText
-  let wpm = wpmTag.innerText
-  let raw = wpm + 20
-  let newStat = new Stat({
-    raw: raw,
-    wpm: wpm,
-    correct: 100,
-    incorrect: cpm,
-  })
-
-  newStat.save()
+router.post("/save-data", (req, res) => {
+  try {
+    wpm = Math.floor(Math.random() * 11)
+    cpm = Math.floor(Math.random() * 11)
+    let raw = wpm + 20
+    let newStat = new Stat({
+      raw: raw,
+      wpm: wpm,
+      correct: 100,
+      incorrect: cpm,
+    })
+    newStat.save()
+    // Save the wpm and cpm values to your database
+    // ...
+    res.status(200).json({ message: "Stat saved successfully" })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Failed to save stat" })
+  }
 })
 module.exports = router

@@ -31,12 +31,12 @@ const userSchema = new mongoose.Schema({
   },
   friends: {
     type: [mongoose.Types.ObjectId],
-    default: []
+    default: [],
   },
   requests: {
     type: [mongoose.Types.ObjectId],
-    default: []
-  }
+    default: [],
+  },
 })
 
 const userDB = mongoose.connection.useDb("projDB")

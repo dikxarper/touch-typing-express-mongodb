@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
-
+const Stat = require("../models/stats")
 const User = require("../models/user")
 
 router.get("/:id", (req, res) => {
@@ -11,6 +11,18 @@ router.get("/:id", (req, res) => {
     res.render("profile", {
       user: user,
     })
+  })
+})
+
+router.get("/data", (req, res) => {
+  Stat.find({}, (err, salesData) => {
+    if (err) return console.error(err)
+    const dates = salesData.map((data) => data.date)
+    const accur = salesData.map((data) => data.accuracy)
+    const wpm = salesData.map((data) => data.word_count / data.time)
+    const cons = salesData.map((data) => data.consistency)
+    const raw = salesData.map((data) => data.raw)
+    res.json({ dates, accur, wpm, cons, raw })
   })
 })
 
