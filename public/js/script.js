@@ -6,8 +6,7 @@ const typingText = document.querySelector(".typing-text p"),
   mistakeTag = document.querySelector(".mistake span"),
   wpmTag = document.querySelector(".wpm span"),
   cpmTag = document.querySelector(".cpm span"),
-  time60Btn = document.querySelector(".mode-time button:nth-child(1)"),
-  time30Btn = document.querySelector(".mode-time button:nth-child(2)")
+  time30Btn = document.querySelector(".time-30")
 
 let timer,
   maxTime = 60,
@@ -101,7 +100,4 @@ inpField.addEventListener("input", initTyping)
 
 time30Btn.addEventListener("click", () => {
   resetGame(30)
-})
-time60Btn.addEventListener("click", () => {
-  resetGame(60)
 })

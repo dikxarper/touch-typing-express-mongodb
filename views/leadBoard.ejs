@@ -1,15 +1,25 @@
-<div class="wrapper">
-  <div class="container">
-    <div class="card_index">
-      <% user.forEach(function(user){ %>
-      <div class="card mt-4">
-        <div class="card-body">
-          <h4 class="card-title"><%= user.username %></h4>
-          <div class="card-subtitle text-muted mb-2"><%= user.email %></div>
-          <div class="card-text mb-2"><%= user.country %></div>
-        </div>
-      </div>
-      <% }) %>
-    </div>
-  </div>
-</div>
+<head>
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/lead.css" />
+</head>
+<table class="table">
+  <thead>
+    <th>Top 60s players</th>
+    <tr>
+      <th>Username</th>
+      <th>Country</th>
+      <th>Organization</th>
+      <th>Wpm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% user60.forEach(function(user){ %>
+    <tr>
+      <td><%=user.username%></td>
+      <td><%=user.country%></td>
+      <td><%=user.organization%></td>
+      <td><%=user.maxWpm%></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

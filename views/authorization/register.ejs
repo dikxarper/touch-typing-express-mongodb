@@ -1,59 +1,93 @@
 <head>
-  <link rel="stylesheet" href="css/authorization.css" />
-  <title>Create Account | Perne</title>
+  <title>Registration</title>
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/login.css" />
 </head>
-
 <body>
-  <form action="register" method="POST" id="reg-form">
-    <div class="text__field">
-      <input
-        type=" text"
-        id="username"
-        name="username"
-        required
-        autocomplete="off"
-      />
-      <span></span>
-      <label>Login</label>
+  <div class="wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="col-sm-9 col-md-7 col-lg-7 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5">
+              <div class="card-body p-4 p-sm-5">
+                <h5 class="card-title text-center mb-5 fw-light fs-5">
+                  Sign Up
+                </h5>
+                <form action="/register" method="post">
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      name="username"
+                      class="form-control"
+                      id="floatingInput"
+                    />
+                    <label>Username</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input
+                      name="email"
+                      type="email"
+                      class="form-control"
+                      id="floatingInput"
+                    />
+                    <label>Email address</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input
+                      type="password"
+                      name="password"
+                      class="form-control"
+                      id="floatingPassword"
+                    />
+                    <label>Password</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      name="country"
+                      class="form-control"
+                      id="floatingInput"
+                    />
+                    <label>Country</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      name="organization"
+                      class="form-control"
+                      id="floatingInput"
+                    />
+                    <label>Organization</label>
+                  </div>
+
+                  <div class="d-grid text-center">
+                    <button class="btn-login" type="submit">Sign up</button>
+                  </div>
+                  <hr class="my-4" />
+                  <div class="col">
+                    Already have an account?
+                    <a
+                      href="/login"
+                      class="ml-2 text-decoration-none text-muted"
+                      >Login</a
+                    >
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row error">
+          <div class="card-body">
+            <% if (typeof alert != 'undefined') { %> <%
+            alert.forEach(function(error){%>
+            <div class="card-title"><%=error.msg %></div>
+            <% }); %> <% } %>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="text__field">
-      <input type="text" id="email" name="email" required autocomplete="off" />
-      <span></span>
-      <label>E-mail</label>
-    </div>
-    <div class="text__field">
-      <input
-        type="password"
-        id="password"
-        name="password"
-        required
-        autocomplete="off"
-      />
-      <label>Password</label>
-    </div>
-    <div class="text__field">
-      <input
-        type="text"
-        id="country"
-        name="country"
-        required
-        autocomplete="off"
-      />
-      <label>Country</label>
-    </div>
-    <div class="text__field">
-      <input
-        type="text"
-        id="organization"
-        name="organization"
-        required
-        autocomplete="off"
-      />
-      <label>Organization</label>
-    </div>
-    <input type="submit" value="Register" id="signup__btn" autocomplete="off" />
-    <div class="signup__link">
-      Already have an account? <a href="login"> Login</a>
-    </div>
-  </form>
+  </div>
 </body>

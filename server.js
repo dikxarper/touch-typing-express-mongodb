@@ -18,6 +18,7 @@ const adminPanelRouter = require("./routes/adminPanelRouter")
 const profileRouter = require("./routes/profileRouter")
 const requestRouter = require("./routes/requestRoute")
 const friendRouter = require("./routes/friendRoute")
+const aboutRouter = require("./routes/aboutRouter")
 const cookieParser = require("cookie-parser")
 
 //connecting to MongoDB Database
@@ -49,6 +50,7 @@ app.use("/admin", adminPanelRouter)
 app.use("/profile", profileRouter)
 app.use("/requests", requestRouter)
 app.use("/friends", friendRouter)
+app.use("/about", aboutRouter)
 
 //app.listen
 app.listen(PORT, () => {

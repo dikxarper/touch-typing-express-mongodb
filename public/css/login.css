@@ -1,0 +1,14 @@
+.card-body {
+  background-color: #2c2e31 !important;
+  color: #d1d0c5 !important;
+}
+
+.btn-login {
+  height: 50px;
+  border-radius: 3%;
+  background-color: #c72227 !important;
+}
+
+label {
+  color: #2c2e31;
+}

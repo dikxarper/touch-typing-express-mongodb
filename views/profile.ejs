@@ -3,74 +3,68 @@
   <title>Profile</title>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="container">
-      <h2 class="mb-5">User's Bio</h2>
+  <h2 class="mb-5">User's Bio</h2>
 
-      <div class="main-body">
-        <div class="row gutters-sm">
-          <div class="col-md-4 mb-3">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex flex-column align-items-center text-center">
-                  <img
-                    src="/img/profilePicture.png"
-                    alt="Admin"
-                    class="rounded-circle"
-                    width="150"
-                  />
-                  <div class="mt-3">
-                    <h4><%= user.username %></h4>
-                    <p class="text-muted font-size-sm"><%= user.country %></p>
-                  </div>
-                </div>
+  <div class="main-body">
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img
+                src="/img/profilePicture.png"
+                alt="Admin"
+                class="rounded-circle"
+                width="150"
+              />
+              <div class="mt-3">
+                <h4><%= user.username %></h4>
+                <p class="text-muted font-size-sm"><%= user.country %></p>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="col-md-8">
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Name</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <%= user.username %>
-                  </div>
-                </div>
-                <hr />
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Email</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary"><%= user.email %></div>
-                </div>
-                <hr />
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Organization</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <%= user.organization %>
-                  </div>
-                </div>
-                <hr />
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary"><%= user.username %></div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary"><%= user.email %></div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Organization</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= user.organization %>
+              </div>
+            </div>
+            <hr />
 
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Country</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary"><%= user.country %></div>
-                </div>
-                <hr />
-                <div class="row">
-                  <div class="col-sm-12">
-                    <a class="btn btn-info" href="/profile/<%= user._id %>/edit"
-                      >Edit</a
-                    >
-                  </div>
-                </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Country</h6>
+              </div>
+              <div class="col-sm-9 text-secondary"><%= user.country %></div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-12">
+                <a class="btn btn-info" href="/profile/<%= user._id %>/edit"
+                  >Edit</a
+                >
               </div>
             </div>
           </div>
@@ -79,3 +73,57 @@
     </div>
   </div>
 </body>
+
+<canvas id="myChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Get the data from the server using fetch
+  var user = ["{{user}}"]
+  console.log(user)
+  fetch(`/profile/${user._id}/chartData`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      // Create the chart using Chart.js
+      var ctx = document.getElementById("myChart").getContext("2d")
+      var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: "line",
+
+        // The data for our dataset
+        data: {
+          labels: data.dates,
+          datasets: [
+            {
+              label: "Accuracy",
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "rgba(255, 99, 132, 1)",
+              data: data.accur,
+            },
+            {
+              label: "Words Per Minute",
+              backgroundColor: "rgba(54, 162, 235, 0.2)",
+              borderColor: "rgba(54, 162, 235, 1)",
+              data: data.wpm,
+            },
+            {
+              label: "Consistency",
+              backgroundColor: "rgba(255, 206, 86, 0.2)",
+              borderColor: "rgba(255, 206, 86, 1)",
+              data: data.cons,
+            },
+            {
+              label: "Raw Score",
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              borderColor: "rgba(75, 192, 192, 1)",
+              data: data.raw,
+            },
+          ],
+        },
+
+        // Configuration options go here
+        options: {},
+      })
+    })
+    .catch((error) => console.error(error))
+</script>

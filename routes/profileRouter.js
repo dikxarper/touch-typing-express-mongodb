@@ -14,12 +14,13 @@ router.get("/:id", (req, res) => {
   })
 })
 
-router.get("/data", (req, res) => {
-  Stat.find({}, (err, salesData) => {
+router.get("/:id/chartData", (req, res) => {
+  console.log(req.cookies.id)
+  Stat.find({ user_id: { _id: req.cookies.id } }, (err, salesData) => {
     if (err) return console.error(err)
     const dates = salesData.map((data) => data.date)
     const accur = salesData.map((data) => data.accuracy)
-    const wpm = salesData.map((data) => data.word_count / data.time)
+    const wpm = salesData.map((data) => data.wpm)
     const cons = salesData.map((data) => data.consistency)
     const raw = salesData.map((data) => data.raw)
     res.json({ dates, accur, wpm, cons, raw })
