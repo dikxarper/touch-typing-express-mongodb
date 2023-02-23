@@ -73,7 +73,7 @@ router.post(
 
           const emailCookie = encodeURIComponent(email)
           res.cookie("email", emailCookie)
-          res.cookie("userId", newUser._id)
+          res.cookie("id", newUser._id)
 
           User.findOne({}, (err, user) => {
             console.log(user)
