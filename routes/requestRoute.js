@@ -152,4 +152,30 @@ router.post('/search', (req, res) => {
     }
 })
 
+router.post('/add/:id', (req, res) => {
+    try {
+        User.findById({ _id: req.params.id }, async (err, user) => {
+            if (err) {
+                console.log(err)
+                res.status(500).send('Server Error')
+            }
+            else if (!user) {
+                res.status(404).send('User Not Found')
+            }
+            else {
+                User.findByIdAndUpdate(req.params.id, { $push: { requests: req.cookies.id } }, { new: true }, 
+                    (error, friend) => {
+                        if (error) { console.log(error) }
+                        else { console.log(friend.requests) }
+                    })
+            }
+        })
+    } 
+    catch(err) {
+        console.log(err)
+        res.status(500).send('Server Error')
+    }
+})
+
+
 module.exports = router

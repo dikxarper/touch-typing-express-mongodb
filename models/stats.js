@@ -1,18 +1,20 @@
+const { ObjectID } = require("bson")
 const mongoose = require("mongoose")
 
 const statSchema = new mongoose.Schema({
   user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-    required: true,
+    type: ObjectID,
   },
-  text_id:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "text",
-    required: true,
+  text_id: {
+    type: String,
   },
   date: {
     type: Date,
+    default: Date.now,
+    required: true,
+  },
+  wpm: {
+    type: Number,
     required: true,
   },
   raw: {
@@ -21,19 +23,15 @@ const statSchema = new mongoose.Schema({
   },
   word_count: {
     type: Number,
-    required: true,
   },
   time: {
     type: Number,
-    required: true,
   },
   accuracy: {
     type: Number,
-    required: true,
   },
   consistency: {
     type: Number,
-    required: true,
   },
   correct: {
     type: Number,
@@ -45,7 +43,7 @@ const statSchema = new mongoose.Schema({
   },
 })
 
-const DB = mongoose.connection.useDb("projDB")
-const Stat = DB.model("stat", statSchema, "stat")
+const userDB = mongoose.connection.useDb("projDB")
+const Stat = userDB.model("stat", statSchema)
 
 module.exports = Stat

@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
 
 
 router.post('/profile', (req, res) => {
-    res.redirect(`/profile/${req.body.friend_id}`)
+    res.redirect(`/profile/guest/${req.body.friend_id}`)
 })
 
 module.exports = router

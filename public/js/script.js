@@ -2,9 +2,12 @@ const typingText = document.querySelector(".typing-text p"),
   inpField = document.querySelector(".wrapper .input-field"),
   tryAgainBtn = document.querySelector(".content button"),
   timeTag = document.querySelector(".time span b"),
+  wordTag = document.querySelector(".word span"),
   mistakeTag = document.querySelector(".mistake span"),
   wpmTag = document.querySelector(".wpm span"),
-  cpmTag = document.querySelector(".cpm span")
+  cpmTag = document.querySelector(".cpm span"),
+  time60Btn = document.querySelector(".mode-time button:nth-child(1)"),
+  time30Btn = document.querySelector(".mode-time button:nth-child(2)")
 
 let timer,
   maxTime = 60,
@@ -13,6 +16,7 @@ let timer,
 
 function loadParagraph() {
   const ranIndex = Math.floor(Math.random() * paragraphs.length)
+  localStorage.setItem("index", ranIndex)
   typingText.innerHTML = ""
   paragraphs[ranIndex].split("").forEach((char) => {
     let span = `<span>${char}</span>`
@@ -26,6 +30,7 @@ function loadParagraph() {
 function initTyping() {
   let characters = typingText.querySelectorAll("span")
   let typedChar = inpField.value.split("")[charIndex]
+
   if (charIndex < characters.length - 1 && timeLeft > 0) {
     if (!isTyping) {
       timer = setInterval(initTimer, 1000)
@@ -41,7 +46,6 @@ function initTyping() {
       }
     } else {
       if (characters[charIndex].innerText == typedChar) {
-        console.log(typedChar)
         characters[charIndex].classList.add("correct")
       } else {
         mistakes++
@@ -53,13 +57,14 @@ function initTyping() {
     characters[charIndex].classList.add("active")
 
     let wpm = Math.round(
-      ((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * 60
+      ((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * maxTime
     )
     wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm
 
     wpmTag.innerText = wpm
+    let cpm = charIndex - mistakes
     mistakeTag.innerText = mistakes
-    cpmTag.innerText = charIndex - mistakes
+    cpmTag.innerText = cpm
   } else {
     clearInterval(timer)
     inpField.value = ""
@@ -71,7 +76,7 @@ function initTimer() {
     timeLeft--
     timeTag.innerText = timeLeft
     let wpm = Math.round(
-      ((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * 60
+      ((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * maxTime
     )
     wpmTag.innerText = wpm
   } else {
@@ -79,7 +84,7 @@ function initTimer() {
   }
 }
 
-function resetGame() {
+function resetGame(maxTime) {
   loadParagraph()
   clearInterval(timer)
   timeLeft = maxTime
@@ -93,18 +98,10 @@ function resetGame() {
 
 loadParagraph()
 inpField.addEventListener("input", initTyping)
-tryAgainBtn.addEventListener("click", resetGame)
 
-let startTime
-function startTimer() {
-  timerElement.innerText = 0
-  startTime = new Date()
-  setInterval(() => {
-    timer.innerText = getTimerTime()
-    getTimerTime()
-  }, 1000)
-}
-
-function getTimerTime() {
-  return Math.floor((new Date() - startTime) / 1000)
-}
+time30Btn.addEventListener("click", () => {
+  resetGame(30)
+})
+time60Btn.addEventListener("click", () => {
+  resetGame(60)
+})
