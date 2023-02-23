@@ -135,6 +135,7 @@ li:not(:first-child) span {
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
+  padding-top: 10px;
   padding-bottom: 35px;
   margin-bottom: 50px;
 
@@ -156,14 +157,36 @@ li:not(:first-child) span {
 
 .mode-time {
   display: flex;
-  margin-left: 50px;
+  margin-left: 60px;
+}
 
+.time-element {
   text-decoration: none;
+  color: #d1d0c5;
+  cursor: pointer;
+  margin: 0 30px;
+  border-style: none;
+}
+
+.time-element:hover {
+  color: #cb3439;
 }
 
 .mode-text {
   display: flex;
-  margin-right: 50px;
+  margin-right: 60px;
+}
+
+.text-element {
+  text-decoration: none;
+  color: #d1d0c5;
+  cursor: pointer;
+  margin: 0 30px;
+  border-style: none;
+}
+
+.text-element:hover {
+  color: #cb3439;
 }
 
 @media (max-width: 745px) {
