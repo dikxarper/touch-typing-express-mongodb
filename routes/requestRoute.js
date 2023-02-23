@@ -142,7 +142,7 @@ router.post('/search', (req, res) => {
                 res.redirect('/requests')
             }
             else {
-                res.redirect(`/profile/${user[index_of_word]._id}`)
+                res.redirect(`/profile/guest/${user[index_of_word]._id}`)
             }
         })
     }

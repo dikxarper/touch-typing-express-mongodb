@@ -17,9 +17,16 @@ router.get("/:id", (req, res) => {
 router.get("/guest/:id", (req, res) => {
     User.findById({ _id: req.params.id }, function (err, user) {
         if (err) console.log(err)
-    
+        
+        for (let i = 0; i < user.friends.length; i++) {
+            console.log(user.friends[i])
+            if (user.friends[i] === req.cookies.id) {
+                res.render("profile_guest", { user: user, is_friend: true })
+            }
+        }
+
         res.render("profile_guest", {
-          user: user,
+          user: user, is_friend: false
         })
       })
 })
