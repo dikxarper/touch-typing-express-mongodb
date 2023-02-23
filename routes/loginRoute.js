@@ -73,7 +73,7 @@ router.post(
 
           const emailCookie = encodeURIComponent(email)
           res.cookie("email", emailCookie)
-          res.cookie("userId", newUser._id)
+          res.cookie("id", newUser._id)
 
           User.findOne({}, (err, user) => {
             console.log(user)
@@ -87,5 +87,17 @@ router.post(
     }
   }
 )
+
+router.get("/logout", (req, res) => {
+  res.clearCookie("us")
+  res.clearCookie("id")
+  res.clearCookie("userRole")
+
+  req.app.locals.user = ""
+
+  req.session.destroy(function (err) {
+    res.redirect("/login")
+  })
+})
 
 module.exports = router

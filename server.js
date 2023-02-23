@@ -9,6 +9,7 @@ const expressLayouts = require("express-ejs-layouts")
 const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 5000
 const User = require("./models/user")
+const Stat = require("./models/stats")
 
 //get routes
 const indexRouter = require("./routes/indexRoute")
@@ -35,15 +36,54 @@ app.set("layout", "layouts/layout")
 
 //middlewares
 app.use(expressLayouts)
-app.use(express.static("public"))
+app.use(express.static(__dirname + "/public"))
 app.use(cookieParser())
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }))
 app.use(session({ secret: "cat", resave: true, saveUninitialized: true }))
 
+app.get("/", (req, res) => {
+  res.render("index")
+})
+
+app.use(function (req, res, next) {
+  if (req.user) {
+    res.locals.user = req.user
+  }
+  next()
+})
+
+app.post("/save-data", (req, res) => {
+  try {
+    const timeR = Math.random()
+    const timeLimit = timeR < 0.5 ? 30 : 60
+
+    wpm = Math.floor(Math.random() * 11)
+    wpm = wpm + 45
+    cpm = Math.floor(Math.random() * 11)
+    acc = Math.floor(Math.random() * (100 - 80 + 1)) + 80
+    cons = Math.floor(Math.random() * (100 - 65 + 1)) + 70
+    let raw = wpm + 20
+    let newStat = new Stat({
+      raw: raw,
+      wpm: wpm,
+      correct: 100,
+      incorrect: cpm,
+      user_id: req.cookies.id,
+      time: timeLimit,
+      accuracy: acc,
+      consistency: cons,
+    })
+    newStat.save()
+    res.render("index")
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Failed to save stat" })
+  }
+})
+
 //connecting to routes
-app.use("/", indexRouter)
 app.use(loginRouter)
 app.use("/leadBoard", leadBoardRouter)
 app.use("/admin", adminPanelRouter)

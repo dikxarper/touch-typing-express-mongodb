@@ -1,8 +1,24 @@
 <head>
-  <link rel="stylesheet" href="css/profile.css" />
+  <link rel="stylesheet" href="/css/profile.css" />
+  <link rel="stylesheet" href="/css/index.css" />
   <title>Profile Edit</title>
 </head>
 <body>
+  <style>
+    body {
+      background-color: #323437;
+    }
+    label {
+      color: #d1d0c5;
+    }
+    .card-body {
+      background-color: #323437;
+      color: #d1d0c5;
+    }
+    .text-secondary {
+      color: #d1d0c5;
+    }
+  </style>
   <h2 class="mb-3">Profile Edit</h2>
 
   <form action="/profile/<%= user._id %>/edit" method="post">

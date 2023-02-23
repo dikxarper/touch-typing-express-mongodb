@@ -43,4 +43,15 @@ router.get('/', (req, res) => {
     }
 })
 
+
+router.post('/profile', (req, res) => {
+    User.findById({ _id: req.body.friend_id }, function (err, user) {
+        if (err) console.log(err)
+
+        res.render("profile_guest", {
+          user: user, is_friend: true
+        })
+    })
+})
+
 module.exports = router

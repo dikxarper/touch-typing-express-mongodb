@@ -1,15 +1,98 @@
-<ul>
-    <%for (let i = 0; i < req_users.length; i++){%>
-        <li>
-            <%=req_users[i].username%>
-            <form action="/requests/accept" method="post">
-                <input type="hidden" name="friendID" id="friendID" value="<%=req_users[i]._id%>">
-                <button type="submit">Accept</button>
-            </form>
-            <form action="/requests/reject" method="post">
-                <input type="hidden" name="friendID" id="friendID" value="<%=req_users[i]._id%>">
-                <button type="submit">Reject</button>
-            </form>
-        </li>
-    <%}%>
-</ul>
+<title>Requests</title>
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+<style>
+  .data-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    display: flex;
+  }
+
+  @media screen and (max-width: 600px) {
+    .data-container {
+      padding: 10px;
+      display: block;
+    }
+  }
+</style>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <%if (req_users.length === 0){%>
+      <div class="data-container">
+        <h6>No Friend Requests</h6>
+      </div>
+      <%}%> <%for (let i = 0; i < req_users.length; i++){%>
+      <div class="data-container">
+        <h5><%=req_users[i].username%></h5>
+        <div style="min-width: 200px; display: flex; padding-left: 65%">
+          <form action="/requests/accept" method="post">
+            <input
+              type="hidden"
+              name="friendID"
+              id="friendID"
+              value="<%=req_users[i]._id%>"
+            />
+            <button type="submit">Accept</button>
+          </form>
+          <form action="/requests/reject" method="post">
+            <input
+              type="hidden"
+              name="friendID"
+              id="friendID"
+              value="<%=req_users[i]._id%>"
+            />
+            <button type="submit">Reject</button>
+          </form>
+        </div>
+      </div>
+      <%}%>
+    </div>
+    <div
+      class="col-sm-6"
+      style="
+        display: flex;
+        text-align: center;
+        padding-left: 15%;
+        max-height: 35px;
+      "
+    >
+      <form action="/requests/search" method="post">
+        <input
+          type="search"
+          placeholder="Type username..."
+          id="searching"
+          name="searching"
+        />
+        <button type="submit">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/49/49116.png"
+            style="width: 27px; height: auto"
+          />
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNSM9/2"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"
+></script>

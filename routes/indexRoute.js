@@ -3,8 +3,8 @@ const router = express.Router()
 const Stat = require("../models/stats")
 
 router.get("/", (req, res) => {
-  res.render("index")
-})
+    res.render("index")
+  })
 
 router.post("/save-data", (req, res) => {
   try {

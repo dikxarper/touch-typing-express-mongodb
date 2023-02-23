@@ -12,7 +12,7 @@ body {
   padding: 0 10px;
   align-items: center;
   justify-content: center;
-  background: #323437;
+  background: #323437 !important;
 }
 ::selection {
   color: #fff;
