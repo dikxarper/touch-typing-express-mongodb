@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
-const Stat = require("..models/stat")
+const Stat = require("../models/stat")
 const User = require("../models/user")
 
 router.get("/:id", (req, res) => {

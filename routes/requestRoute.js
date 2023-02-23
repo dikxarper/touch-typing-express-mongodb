@@ -91,5 +91,65 @@ router.post('/reject', async (req, res) => {
     }
 })
 
+function levenshteinDistance(a, b) {
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+  
+    const distances = [];
+    for (let i = 0; i <= b.length; i++) {
+      distances[i] = [i];
+      for (let j = 1; j <= a.length; j++) {
+        if (i === 0) {
+          distances[i][j] = j;
+        } else {
+          distances[i][j] = 0;
+        }
+      }
+    }
+  
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        const substitutionCost = (a[j - 1] === b[i - 1]) ? 0 : 1;
+        distances[i][j] = Math.min(
+          distances[i][j - 1] + 1,
+          distances[i - 1][j] + 1,
+          distances[i - 1][j - 1] + substitutionCost
+        );
+      }
+    }
+
+    return 1 - (distances[b.length][a.length] / Math.max(a.length, b.length));
+}
+
+router.post('/search', (req, res) => {
+    var search_name = req.body.searching
+    try {
+        User.find({ }, (error, user) => {
+            if (error) {
+                console.log(error)
+                res.status(500).send('Server Error')
+            }
+            var closest_approximation = 0
+            var index_of_word
+            for (let i = 0; i < user.length; i++) {
+                similarity = levenshteinDistance(search_name, user[i].username)
+                if (similarity > closest_approximation) {
+                    closest_approximation = similarity
+                    index_of_word = i
+                }
+            }
+            if (closest_approximation < 0.5) {
+                res.redirect('/requests')
+            }
+            else {
+                res.redirect(`/profile/${user[index_of_word]._id}`)
+            }
+        })
+    }
+    catch(err) {
+        console.log(err)
+        res.status(500).send('Server Error')
+    }
+})
 
 module.exports = router

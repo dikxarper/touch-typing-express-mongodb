@@ -22,7 +22,10 @@
                 <h5><%=friend_users[i].username%></h5>
                 <h6><%=friend_users[i].email%></h6>
             </div>
-            <button style="margin-left: 55%">View Profile</button>
+            <form action="/friends/profile" method="post" style="margin-left: 55%">
+                <input type="hidden" value="<%=friend_users[i]._id%>" name="friend_id" id="friend_id">
+                <button type="submit">View Profile</button>
+            </form>
         </div>
     <%}%>
 </body>

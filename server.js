@@ -8,7 +8,7 @@ const LocalStrategy = require("passport-local").Strategy
 const expressLayouts = require("express-ejs-layouts")
 const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 5000
-const User = require("./models/user")
+const User = require("./models/user")   
 
 //get routes
 const indexRouter = require("./routes/indexRoute")
@@ -18,6 +18,8 @@ const adminPanelRouter = require("./routes/adminPanelRouter")
 const profileRouter = require("./routes/profileRouter")
 const requestRouter = require("./routes/requestRoute")
 const friendRouter = require("./routes/friendRoute")
+
+
 const cookieParser = require("cookie-parser")
 
 //connecting to MongoDB Database
