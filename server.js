@@ -3,12 +3,9 @@ const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
 const session = require("express-session")
-const passport = require("passport")
-const LocalStrategy = require("passport-local").Strategy
 const expressLayouts = require("express-ejs-layouts")
 const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 5000
-const User = require("./models/user")
 const Stat = require("./models/stats")
 
 //get routes
@@ -57,15 +54,6 @@ app.get("/", (req, res) => {
 
 app.post("/save-data", (req, res) => {
   try {
-    const timeR = Math.random()
-    const timeLimit = timeR < 0.5 ? 30 : 60
-
-    wpm = Math.floor(Math.random() * 11)
-    wpm = wpm + 45
-    cpm = Math.floor(Math.random() * 11)
-    acc = Math.floor(Math.random() * (100 - 80 + 1)) + 80
-    cons = Math.floor(Math.random() * (100 - 65 + 1)) + 70
-    let raw = wpm + 20
     let newStat = new Stat({
       raw: raw,
       wpm: wpm,

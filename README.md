@@ -19,3 +19,7 @@ Install the dependencies with:
 npm install <dependencies>
 ```
 
+In order to run the project install `nodemon` library and run:
+```
+npm run devStart
+```

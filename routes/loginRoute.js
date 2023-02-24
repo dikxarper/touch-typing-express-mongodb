@@ -11,8 +11,6 @@ router.get("/login", (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    // Validate user credentials and retrieve user ID
-
     const { username, password } = req.body
     const user = await User.findOne({ username: username })
 
@@ -20,9 +18,7 @@ router.post("/login", async (req, res) => {
     const valPassword = bcrypt.compareSync(password, user.password)
     if (!valPassword)
       return res.status(400).json({ message: "Password is not correct" })
-    if (user.role == "admin") {
-      res.redirect("/admin")
-    } else {
+    else {
       res.cookie("userRole", user.role)
       res.cookie("username", username)
       res.cookie("userId", user._id)
