@@ -11,6 +11,8 @@ router.get("/login", (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
+    // Validate user credentials and retrieve user ID
+
     const { username, password } = req.body
     const user = await User.findOne({ username: username })
 
@@ -23,8 +25,9 @@ router.post("/login", async (req, res) => {
     } else {
       res.cookie("userRole", user.role)
       res.cookie("username", username)
-      res.cookie("id", user._id)
-      req.app.locals.user = user
+      res.cookie("userId", user._id)
+      req.session.userId = user._id
+      console.log(req.session.userId)
 
       res.redirect(`profile/${user._id}`)
     }
@@ -89,8 +92,9 @@ router.post(
 )
 
 router.get("/logout", (req, res) => {
-  res.clearCookie("us")
+  res.clearCookie("userId")
   res.clearCookie("id")
+  res.clearCookie("username")
   res.clearCookie("userRole")
 
   req.app.locals.user = ""

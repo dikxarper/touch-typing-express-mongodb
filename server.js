@@ -13,6 +13,7 @@ const Stat = require("./models/stats")
 
 //get routes
 const indexRouter = require("./routes/indexRoute")
+const headerRouter = require("./routes/headerRouter")
 const loginRouter = require("./routes/loginRoute")
 const leadBoardRouter = require("./routes/leadBoardRoute")
 const adminPanelRouter = require("./routes/adminPanelRouter")
@@ -36,22 +37,22 @@ app.set("layout", "layouts/layout")
 
 //middlewares
 app.use(expressLayouts)
+app.use(
+  session({
+    secret: "cat",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: true },
+  })
+)
 app.use(express.static(__dirname + "/public"))
 app.use(cookieParser())
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }))
-app.use(session({ secret: "cat", resave: true, saveUninitialized: true }))
 
 app.get("/", (req, res) => {
   res.render("index")
-})
-
-app.use(function (req, res, next) {
-  if (req.user) {
-    res.locals.user = req.user
-  }
-  next()
 })
 
 app.post("/save-data", (req, res) => {
@@ -85,6 +86,7 @@ app.post("/save-data", (req, res) => {
 
 //connecting to routes
 app.use(loginRouter)
+app.use(headerRouter)
 app.use("/leadBoard", leadBoardRouter)
 app.use("/admin", adminPanelRouter)
 app.use("/profile", profileRouter)
