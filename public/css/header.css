@@ -14,8 +14,6 @@ button {
   align-items: center;
 }
 
-/* Nav */
-
 .navbar_logo {
   width: calc(height * 3.32);
   height: 45px;
